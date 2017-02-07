@@ -1,7 +1,8 @@
-var express = require('express')
-    , router = express.Router()
-    ,Product     = require('../models/product')
-    , Order     = require('../models/order');
+var express = require('express'),
+    router = express.Router(),
+    User     = require('../models/user'),
+    Product     = require('../models/product'),
+    Order = require('../models/order');
 
 
 router.route('/orders')
@@ -9,7 +10,42 @@ router.route('/orders')
     .post(function(req, res) {
 
         var order = new Order();
-        order.products = req.body.products;
+
+        order.user = req.user._id;
+
+        var productList = req.body.products;
+
+        productList.forEach(function(product_id) {
+            Product.findById(product_id, function(err, product) {
+                if (err)
+                    return res.send(err);
+
+                if (product.stock > 0) {
+                    order.products.push(product._id);
+                    // product.stock--;
+                    // product.save(function(err) {
+                    //     if (err)
+                    //         res.send(err);
+                    //     console.log('Product Updated!')
+                    // });
+                } else {
+                    return res.json({ message: product.name + ' is out of stock!' });
+                }
+            })
+        });
+
+        productList.forEach(function(product_id) {
+            Product.findById(product_id, function(err, product) {
+                if (err)
+                    return res.send(err);
+                product.stock--;
+                product.save(function(err) {
+                    if (err)
+                        return res.send(err);
+                    console.log('Product Updated!');
+                });
+            })
+        });
 
         order.save(function(err) {
             if (err)

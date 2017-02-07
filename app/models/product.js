@@ -5,7 +5,8 @@ var ProductSchema   = new Schema({
     name: String,
     price: Number,
     description: String,
-    imageUrl: String
+    imageUrl: String,
+    stock: Number
 }, {
     timestamps: true
 });

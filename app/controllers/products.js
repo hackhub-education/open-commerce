@@ -7,6 +7,7 @@ var parseBody = function(product, body) {
     product.description = body.description;
     product.price = body.price;
     product.imageUrl = body.imageUrl;
+    product.stock = body.stock;
 };
 
 router.route('/products')
@@ -30,7 +31,6 @@ router.route('/products')
         Product.find(function(err, products) {
             if (err)
                 res.send(err);
-
             res.json(products);
         });
     });
