@@ -3,6 +3,7 @@ var express = require('express'),
 
 router.use(require('./products'));
 router.use(require('./orders'));
+router.use(require('./users'));
 
 router.use(function(req, res, next) {
     console.log('Something is happening.');

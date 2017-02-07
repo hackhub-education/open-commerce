@@ -1,16 +1,21 @@
 var express    = require('express'),
     app        = express(),
     bodyParser = require('body-parser'),
-    mongoose   = require('mongoose');
+    morgan = require('morgan'),
+    mongoose   = require('mongoose'),
+    config = require('./config');
 
-mongoose.connect('mongodb://yan:hong@ds127938.mlab.com:27938/open-commerce'); // connect to our database
+var port = process.env.PORT || 8080;
+mongoose.connect(config.database); // connect to our database
+
+app.set('superSecret', config.secret);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api', require('./app/controllers'));
+app.use(morgan('dev'));
 
-var port = process.env.PORT || 8080;
+app.use('/api', require('./app/controllers'));
 
 app.listen(port);
 console.log('Magic happens on port ' + port);
