@@ -2,12 +2,20 @@ var express = require('express')
     , router = express.Router()
     , Product     = require('../models/product');
 
+var parseBody = function(product, body) {
+    product.name = body.name;
+    product.description = body.description;
+    product.price = body.price;
+    product.imageUrl = body.imageUrl;
+};
+
 router.route('/products')
 
     .post(function(req, res) {
 
         var product = new Product();
-        product.name = req.body.name;
+
+        parseBody(product, req.body);
 
         product.save(function(err) {
             if (err)
@@ -48,7 +56,7 @@ router.route('/products/:product_id')
             if (err)
                 res.send(err);
 
-            product.name = req.body.name;
+            parseBody(product, req.body);
 
             product.save(function(err) {
                 if (err)

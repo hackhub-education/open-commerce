@@ -3,7 +3,7 @@ var Schema       = mongoose.Schema;
 
 var OrderSchema   = new Schema({
     products:[
-        // {product: Schema.Types.ObjectId, ref: 'Product'}
+        {type: Schema.Types.ObjectId, ref: 'Product'}
     ]
 }, {
     timestamps: true
