@@ -1,10 +1,13 @@
-// app/models/bear.js
-
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var ProductSchema   = new Schema({
-    name: String
+    name: String,
+    price: Number,
+    description: String,
+    imageUrl: String
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
