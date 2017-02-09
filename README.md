@@ -11,7 +11,7 @@ Connect to DB via terminal
 
 ## API Docs
 
-* Login
+### Login
 POST
 http://open-commerce.herokuapp.com/api/login
 body:
@@ -27,7 +27,7 @@ response example:
 }
 
 
-* Signup
+### Signup
 POST
 http://open-commerce.herokuapp.com/api/signup
 {
@@ -35,7 +35,7 @@ http://open-commerce.herokuapp.com/api/signup
   password: String
 }
 
-* List Products
+### List Products
 GET
 http://open-commerce.herokuapp.com/api/products
 Header:
@@ -43,7 +43,7 @@ Header:
   x-access-token: "TOKEN"
 }
 
-* Create Products
+### Create Products
 POST
 http://open-commerce.herokuapp.com/api/products
 Header:
@@ -59,7 +59,7 @@ Body:
   stock: Number
 }
 
-* Show Product Detail
+### Show Product Detail
 POST
 http://open-commerce.herokuapp.com/api/products/:product_id
 Header:
@@ -67,7 +67,7 @@ Header:
   x-access-token: "TOKEN"
 }
 
-* Update Product Detail
+### Update Product Detail
 PUT
 http://open-commerce.herokuapp.com/api/products/:product_id
 Header:
@@ -83,7 +83,7 @@ Body:
   stock: Number
 }
 
-* Update Product Detail
+### Update Product Detail
 DELETE
 http://open-commerce.herokuapp.com/api/products/:product_id
 Header:
@@ -91,7 +91,7 @@ Header:
   x-access-token: "TOKEN"
 }
 
-* List Orders
+### List Orders
 GET
 http://open-commerce.herokuapp.com/api/orders
 Header:
@@ -99,7 +99,7 @@ Header:
   x-access-token: "TOKEN"
 }
 
-* Show Orders Detail
+### Show Orders Detail
 GET
 http://open-commerce.herokuapp.com/api/orders/:order_id
 Header:
