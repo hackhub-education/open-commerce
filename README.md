@@ -174,5 +174,33 @@ Header
 
 ### Update An Order
 
+PUT
+
+http://open-commerce.herokuapp.com/api/orders/:order_id
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```
+
+Body
+```
+{
+    "products": [String]
+}
+```
 
 ### Delete An Order
+
+DELETE
+
+http://open-commerce.herokuapp.com/api/orders/:order_id
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```

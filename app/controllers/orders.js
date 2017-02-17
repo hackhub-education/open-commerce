@@ -96,7 +96,7 @@ router.route('/orders/:order_id')
             if (err)
                 res.send(err);
 
-            order.name = req.body.name;
+            order.products = req.body.products;
 
             order.save(function(err) {
                 if (err)
