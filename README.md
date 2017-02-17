@@ -1,56 +1,86 @@
 # Open Commerce
 
-## MongoDB
-
-Connect to DB via terminal
-`mongo ds127938.mlab.com:27938/open-commerce -u yan -p hong`
+Creator: Yan Hong (http://onlyhongyan.com)
 
 ## Run Server
 
-`node server.js`
+`npm start` or `node server.js`
 
 ## API Docs
 
-### Login
+### Signup
 POST
-http://open-commerce.herokuapp.com/api/login
-body:
+
+http://open-commerce.herokuapp.com/api/signup
+
+Body
+```
 {
   username: String,
   password: String
 }
-response example:
+```
+
+### Login
+POST
+
+http://open-commerce.herokuapp.com/api/login
+
+Body
+```
+{
+  username: String,
+  password: String
+}
+```
+Response
+```
 {
   "success": true,
   "message": "Enjoy your token!",
   "token": "TOKEN"
 }
-
-
-### Signup
-POST
-http://open-commerce.herokuapp.com/api/signup
-{
-  username: String,
-  password: String
-}
+```
 
 ### List Products
 GET
-http://open-commerce.herokuapp.com/api/products
-Header:
-{
-  x-access-token: "TOKEN"
-}
 
-### Create Products
-POST
 http://open-commerce.herokuapp.com/api/products
-Header:
+
+Header
+```
 {
   x-access-token: "TOKEN"
 }
-Body:
+```
+
+### Product Detail
+
+POST
+
+http://open-commerce.herokuapp.com/api/products/:product_id
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```
+
+### Create A Product
+POST
+
+http://open-commerce.herokuapp.com/api/products
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```
+
+Body
+```
 {
   name: String,
   description: String,
@@ -58,23 +88,22 @@ Body:
   imageUrl: String,
   stock: Number
 }
-
-### Show Product Detail
-POST
-http://open-commerce.herokuapp.com/api/products/:product_id
-Header:
-{
-  x-access-token: "TOKEN"
-}
+```
 
 ### Update Product Detail
+
 PUT
+
 http://open-commerce.herokuapp.com/api/products/:product_id
-Header:
+
+Header
+```
 {
   x-access-token: "TOKEN"
 }
-Body:
+```
+Body
+```
 {
   name: String,
   description: String,
@@ -82,27 +111,68 @@ Body:
   imageUrl: String,
   stock: Number
 }
+```
 
-### Update Product Detail
+### Delete A Product
+
 DELETE
+
 http://open-commerce.herokuapp.com/api/products/:product_id
-Header:
+
+Header
+```
 {
   x-access-token: "TOKEN"
 }
+```
 
 ### List Orders
-GET
-http://open-commerce.herokuapp.com/api/orders
-Header:
-{
-  x-access-token: "TOKEN"
-}
 
-### Show Orders Detail
 GET
-http://open-commerce.herokuapp.com/api/orders/:order_id
-Header:
+
+http://open-commerce.herokuapp.com/api/orders
+
+Header
+```
 {
   x-access-token: "TOKEN"
 }
+```
+
+### Create An Order
+
+POST
+
+http://open-commerce.herokuapp.com/api/orders/
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```
+
+Body
+```
+{
+	"products": [String]
+}
+```
+
+### Show Order Detail
+
+GET
+
+http://open-commerce.herokuapp.com/api/orders/:order_id
+
+Header
+```
+{
+  x-access-token: "TOKEN"
+}
+```
+
+### Update An Order
+
+
+### Delete An Order

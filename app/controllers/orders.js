@@ -1,7 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    User     = require('../models/user'),
-    Product     = require('../models/product'),
+    User  = require('../models/user'),
+    Product  = require('../models/product'),
     Order = require('../models/order');
 
 
@@ -15,44 +15,52 @@ router.route('/orders')
 
         var productList = req.body.products;
 
-        productList.forEach(function(product_id) {
-            Product.findById(product_id, function(err, product) {
+        for (var index = 0; index < productList.length; index++) {
+            var productId = productList[index];
+
+            order.products.push(productId);
+
+            order.save(function(err, doc) {
+                if (err)
+                    res.send(err);
+                console.log('Saved!');
+                console.log(doc);
+            });
+            Product.findById(productId, function(err, product) {
                 if (err)
                     return res.send(err);
 
                 if (product.stock > 0) {
-                    order.products.push(product._id);
-                    // product.stock--;
-                    // product.save(function(err) {
-                    //     if (err)
-                    //         res.send(err);
-                    //     console.log('Product Updated!')
-                    // });
+                    product.stock --;
+
+                    product.save(function(err) {
+                        if (err)
+                            res.send(err);
+                        console.log('Checkout Stock on Product ' + product.name)
+                    });
+
+
                 } else {
+                    for (var i = index; i >= 0; i--) {
+                        Product.findById(productList[index]._id, function(err, product) {
+                            product.stock ++;
+                            product.save(function(err) {
+                                if (err)
+                                    res.send(err);
+                                console.log('Restock Stock on Product ' + product.name)
+                            });
+                        });
+                    }
+
                     return res.json({ message: product.name + ' is out of stock!' });
                 }
             })
-        });
 
-        productList.forEach(function(product_id) {
-            Product.findById(product_id, function(err, product) {
-                if (err)
-                    return res.send(err);
-                product.stock--;
-                product.save(function(err) {
-                    if (err)
-                        return res.send(err);
-                    console.log('Product Updated!');
-                });
-            })
-        });
 
-        order.save(function(err) {
-            if (err)
-                res.send(err);
+        }
 
-            res.json({ message: 'Order created!' });
-        });
+        res.json({ message: 'Order created!' });
+
 
     })
 
@@ -83,6 +91,8 @@ router.route('/orders/:order_id')
 
         Order.findById(req.params.order_id, function(err, order) {
 
+            // update order and restock / stock product
+
             if (err)
                 res.send(err);
 
@@ -102,6 +112,9 @@ router.route('/orders/:order_id')
         Order.remove({
             _id: req.params.order_id
         }, function(err, order) {
+
+            // update order and restock
+
             if (err)
                 res.send(err);
 
@@ -110,4 +123,4 @@ router.route('/orders/:order_id')
     });
 
 
-module.exports = router
+module.exports = router;
